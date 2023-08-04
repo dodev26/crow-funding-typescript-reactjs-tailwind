@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  body {
+    @apply font-primary text-base font-normal mx-auto bg-lite;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    max-width: 1440px;
+    &.dark {
+      @apply bg-darkbg;
+    }
+  }
+  input {
+    @apply outline-none;
+    &[type="number"] {
+      &.show-arrow {
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+.gradient-banner {
+  opacity: 0.4000000059604645;
+  background: linear-gradient(180deg, rgba(32, 18, 63, 0) 0%, #000 93.43%);
+}
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
+.scroll-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  .react-date-picker {
+    @apply w-full  px-6 py-4 border rounded-xl text-sm font-medium  dark:bg-transparent border-strock placeholder:text-text4  text-text1;
+    height: 54px;
+    &--disabled {
+      @apply bg-gray-200;
+    }
+    .react-date-picker__wrapper {
+      @apply border-none justify-between items-center;
+    }
+    .react-date-picker__clear-button {
+      @apply hidden;
+    }
+    .react-date-picker__inputGroup {
+      @apply border-none min-w-0 flex-grow-0;
+    }
+    .react-date-picker__button {
+      @apply p-0;
+    }
+    .react-date-picker__calendar-button.react-date-picker__button {
+      @apply text-text4;
+    }
+  }
+  &.dark {
+    .react-date-picker {
+      @apply text-white border border-darkStroke;
+      .react-calendar {
+        @apply bg-darkSoft;
+      }
+      &--disabled {
+        @apply bg-darkSoft;
+      }
+    }
+  }
+}
+
+body .react-date-picker__calendar .react-calendar {
+  @apply border-none shadow;
+  .react-calendar__tile--active {
+    @apply bg-secondary text-white;
+  }
+  .react-calendar__tile--now {
+    @apply bg-primary text-white;
+  }
+}
