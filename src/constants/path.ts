@@ -8,5 +8,6 @@ export const PATH = {
   payment: '/payment',
   withdraw: '/withdraw',
   profile: '/profile',
+  settings: '/settings',
 } as const
 

@@ -50,6 +50,7 @@ const authSlice = createSlice({
       state.user = {
         ...action.payload
       }
+      state.loading = false
     },
     updateUserFailure: (state, action: PayloadAction<string>) => {
       state.loading = false

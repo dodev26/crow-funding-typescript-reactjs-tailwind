@@ -11,6 +11,9 @@
       @apply bg-darkbg;
     }
   }
+  button {
+    outline: none;
+  }
   input {
     @apply outline-none;
     &[type="number"] {

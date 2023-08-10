@@ -1,12 +1,15 @@
+import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import Button from "~/components/button"
 import { Heading } from "~/components/heading/Heading"
 import { PATH } from "~/constants"
 import { CampaignFeatures, CampaignGrid } from "~/modules/campaign"
+import { lang } from "./lang"
 
 
 
 export const CampaignPage = () => {
+  const { t } = useTranslation()
   return <>
     <div className="mb-10 bg-white dark:bg-darkSecondary rounded-3xl flex items-center justify-between py-8 px-10">
       <div className="flex items-start gap-x-6">
@@ -16,14 +19,14 @@ export const CampaignPage = () => {
           </svg>
         </div>
         <div className="flex-1">
-          <Heading className="text-[22px] font-semibold mb-2">Create Your Campaign</Heading>
-          <p className="text-sm text-text3 mb-2">Jump right into our editor and create your first Virtue campaign!</p>
-          <Link to="/" className="text-primary text-sm">Need any help? Learn More...</Link>
+          <Heading className="text-[22px] font-semibold mb-2">{t(lang.heading())}</Heading>
+          <p className="text-sm text-text3 mb-2">{t(lang.subheading())}</p>
+          <Link to="/" className="text-primary text-sm">{t(lang.help())}</Link>
         </div>
       </div>
-      <Button type="button" kind="tertiary" href={PATH.campaign_start} className="px-8">Create campaign</Button>
+      <Button type="button" kind="tertiary" href={PATH.campaign_start} className="px-8">{t(lang.create())}</Button>
     </div>
-    <Heading as="h2" number={4}>Your campaign</Heading>
+    <Heading as="h2" number={4}>{t(lang.yourCampaign())}</Heading>
     <CampaignGrid type="secondary">
       <CampaignFeatures />
       <CampaignFeatures />

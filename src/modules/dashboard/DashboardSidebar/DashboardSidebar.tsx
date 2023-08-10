@@ -1,18 +1,16 @@
 import classNames from "classnames"
 import { NavLink } from "react-router-dom"
 import { ButtonTheme } from "~/components/buttonTheme/ButtonTheme"
-import { Heading } from "~/components/heading/Heading"
 import DashBoardIcon from "~/components/icons/DashBoardIcon"
 import IconCampaign from "~/components/icons/IconCampaign"
-import IconLight from "~/components/icons/IconLight"
 import IconLogout from "~/components/icons/IconLogout"
 import IconPayment from "~/components/icons/IconPayment"
 import { IconProfile } from "~/components/icons/IconProfile/IconProfile"
+import IconSetting from "~/components/icons/IconSettings"
 import IconWithdraw from "~/components/icons/IconWithdraw"
 import { PATH } from "~/constants"
-import { auth } from "~/firebase/initialize"
 import useLogout from "~/hooks/useLogout"
-import useTheme from "~/hooks/useTheme"
+
 
 
 const NAV_LINKS = [
@@ -38,7 +36,11 @@ const NAV_LINKS = [
     icon: <IconProfile />,
     title: "Profile",
     path: PATH.profile
-  },
+  }, {
+    icon: <IconSetting />,
+    title: "Settings",
+    path: PATH.settings
+  }
   // {
   //   icon: <IconLogout />,
   //   title: "Logout",

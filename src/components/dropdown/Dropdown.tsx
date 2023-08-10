@@ -8,6 +8,7 @@ export interface ISelect {
   placeholder: string;
   selected: string;
   className?: string;
+  type?: "primary" | "secondary"
 }
 export interface IList {
   children: React.ReactNode
@@ -32,16 +33,11 @@ interface IDropdown {
   errorField?: string | undefined
   hideError?: boolean
   children: React.ReactNode,
-
 }
 export const Dropdown: React.FC<IDropdown> & IDropdownComposition = ({ errorField, hideError = false, children }) => {
 
-
-
-
-
   return <DropdownProvider>
-    <div className="relative inline-block w-full">
+    <div className="relative inline-block h-full w-full">
       {children}
       {!hideError && <div className='mt-1 text-red-600 min-h-[1.25rem] text-xs font-semibold'>{errorField}</div>}
     </div>

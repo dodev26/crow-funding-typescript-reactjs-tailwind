@@ -12,7 +12,7 @@ interface IUploadAvatar extends React.InputHTMLAttributes<HTMLInputElement> {
 export const UploadAvatar = ({ className, avatarURL, open = true, isLoading, type = "file", onChange, ...props }: IUploadAvatar) => {
   const lockInput = useMemo(() => open ? false : true, [open])
   const [localValue, setLocalValue] = useState<File | null>(null)
-
+  console.log(localValue);
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {

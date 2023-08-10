@@ -16,8 +16,8 @@ import { useAppDispatch, useAppSelector } from "./hooks/hooks"
 import { loginSuccess, logout } from "./store/auth/authSlice"
 import { RootState } from "./store/configureStore"
 import { ProfilePage } from "./pages/ProfilePage"
-import { removeUserFromLS, setUserToLS } from "./utils/auth"
 import { PaymentPage } from "./pages/PaymentPage"
+import { SettingsPage } from "./pages/SettingsPage"
 
 
 
@@ -63,6 +63,8 @@ const App = () => {
     return () => unsubscribe()
   }, [])
 
+
+
   return (
     <BrowserRouter >
       <Routes>
@@ -78,6 +80,7 @@ const App = () => {
             <Route path={PATH.campaign_start} element={<StartCampaignPage />} />
             <Route path={PATH.profile} element={<ProfilePage />} />
             <Route path={PATH.payment} element={<PaymentPage />} />
+            <Route path={PATH.settings} element={<SettingsPage />} />
           </Route>
         </Route>
         <Route element={<RejectedRoute />}>
