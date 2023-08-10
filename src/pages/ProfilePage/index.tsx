@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Timestamp, doc, getDoc, updateDoc } from "firebase/firestore"
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { EmailAuthProvider, User, reauthenticateWithCredential, signInAnonymously, updatePassword, updateProfile, } from "firebase/auth";
+import { Timestamp, doc, getDoc } from "firebase/firestore"
+import { EmailAuthProvider, User, reauthenticateWithCredential, updatePassword, } from "firebase/auth";
 import { omit } from "lodash"
 import { useEffect, useMemo, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
@@ -15,11 +14,9 @@ import InputNumber from "~/components/inputNumber"
 import { auth, db } from "~/firebase/initialize"
 import { SchemaType, schema } from "~/utils/schema"
 import { Heading } from "~/components/heading/Heading";
-import { useAppDispatch, useAppSelector } from "~/hooks/hooks";
+import { useAppSelector } from "~/hooks/hooks";
 import { RootState } from "~/store/configureStore";
 import UploadAvatar from "~/components/uploadAvatar";
-import { uploadTaskPromise } from "~/utils/scripts";
-import { updateUserFailure, updateUserRequest, updateUserSuccess } from "~/store/auth/authSlice";
 import { FirebaseError } from "firebase/app";
 import { useModal } from "~/contexts/modal.context";
 import ModalPassword from "~/modules/Profile/ModalPassword";

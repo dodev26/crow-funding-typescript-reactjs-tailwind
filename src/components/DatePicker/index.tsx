@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { DatePicker as DatePickerCustomize, DatePickerProps } from 'react-date-picker';
-import { Value } from 'react-date-picker/dist/cjs/shared/types';
+
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import { Value } from 'node_modules/react-date-picker/dist/esm/shared/types';
 
 interface IDatePicker extends DatePickerProps {
   errorField?: string,
@@ -12,7 +13,7 @@ interface IDatePicker extends DatePickerProps {
 }
 const DatePicker = ({ errorField, hideError, onChange, value, ...props }: IDatePicker) => {
   const [localValue, setLocalValue] = useState(new Date())
-
+  console.log(localValue);
   const handleChangeValueDatePicker = (value: Value) => {
     setLocalValue(value as Date)
     onChange?.(value)

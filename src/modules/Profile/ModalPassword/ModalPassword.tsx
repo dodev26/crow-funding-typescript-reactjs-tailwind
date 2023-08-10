@@ -11,6 +11,7 @@ import { auth, db } from "~/firebase/initialize"
 import { doc, updateDoc } from "firebase/firestore"
 import { RootState } from "~/store/configureStore"
 import { toast } from "react-toastify"
+import { FirebaseError } from "firebase/app"
 
 
 interface IModalPassword {
@@ -20,7 +21,8 @@ interface IModalPassword {
 export const ModalPassword = ({ dataUpdate }: IModalPassword) => {
   const { closeModal } = useModal()
   const dispatch = useAppDispatch()
-  const { user: UserData } = useAppSelector((state: RootState) => state.auth)
+  const { user: UserData, loading } = useAppSelector((state: RootState) => state.auth)
+
   const handleConfirmPassAndUpdateData = (dataUpdate: PersonalFormFields) => async (currentPassword: {
     currentPassword: string
   }): Promise<void> => {
@@ -36,7 +38,6 @@ export const ModalPassword = ({ dataUpdate }: IModalPassword) => {
         linkAvatar = await uploadTaskPromise(avatar, 'images/' + avatar.name)
         dataPayload.avatarURL = linkAvatar
       }
-
       await updateDoc(colRefUser, dataPayload)
       await updateProfile(auth.currentUser as User, {
         displayName: dataPayload.firstName + dataPayload.lastName,
@@ -47,13 +48,15 @@ export const ModalPassword = ({ dataUpdate }: IModalPassword) => {
       dispatch(updateUserSuccess(auth.currentUser as User))
       closeModal()
     } catch (error) {
-      toast.error('Update personal info failed')
-      dispatch(updateUserFailure('Update personal info failed'))
+      if (error instanceof FirebaseError) {
+        dispatch(updateUserFailure(error.message))
+        throw new Error(error.message)
+      }
     }
   }
 
   return <ReactModal isOpen overlayClassName="modal-overlay fixed inset-0 bg-black/40 z-50 flex items-center justify-center" className="modal-content w-full max-w-[521px] bg-white dark:bg-darkSecondary rounded-2xl outline-none p-10 relative max-h-[90vh] overflow-y-scroll scroll-hidden">
-    <button onClick={closeModal} type="button" className="w-10 h-10 flex items-center justify-center rounded hover:bg-error hover:text-white hover:border hover:border-strock absolute right-3 top-3 transition-all  text-text1 z-10 cursor-pointer dark:text-text3 dark:border-none"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+    <button disabled={loading} onClick={closeModal} type="button" className="w-10 h-10 flex items-center justify-center rounded hover:bg-error hover:text-white hover:border hover:border-strock absolute right-3 top-3 transition-all  text-text1 z-10 cursor-pointer dark:text-text3 dark:border-none"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
     </svg>
     </button>

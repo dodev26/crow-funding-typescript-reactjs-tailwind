@@ -1,15 +1,15 @@
 import classNames from "classnames"
 import { useEffect } from "react"
 import { useController } from "react-hook-form"
-import type { FieldValues } from 'react-hook-form'
+import type { FieldPath, FieldValues } from 'react-hook-form'
 import useToggle from "~/hooks/useToggle"
 
-interface ICheckBox<TFieldValues extends FieldValues> extends React.InputHTMLAttributes<HTMLInputElement> {
+interface ICheckBox<TFieldValues extends FieldValues = FieldValues,
+  _TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>> extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string,
   id: string,
   control: any,
   errorField?: string
-
 }
 
 export const Checkbox = <TFieldValues extends FieldValues = FieldValues>({ name, errorField, control, id, ...props }: ICheckBox<TFieldValues>) => {

@@ -70,7 +70,7 @@ export const CampaignView = () => {
           <div className="mb-[60px]" />
           <div className="flex flex-col gap-y-[30px]">
             {Array(3).fill(0).map((_, index) => (
-              <CampaignPerk />
+              <CampaignPerk key={index} />
             ))}
           </div>
         </div>

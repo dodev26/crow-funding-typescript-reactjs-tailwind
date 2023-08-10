@@ -7,13 +7,11 @@ import Button from "~/components/button"
 import Dropdown from "~/components/dropdown"
 import Textarea from "~/components/textarea"
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { FormEventHandler, useEffect, useMemo, useRef, useState } from "react"
+import { FormEventHandler, useEffect, useRef, useState } from "react"
 import useOnChange from "~/hooks/useOnchange"
 import axios from "axios"
-import { apiURL } from "~/configs"
 import { CampaignShemaType, campaignSchema } from "~/utils/schema"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { HttpStatusCode } from "~/constants"
 import { toast } from "react-toastify"
 import ImageUpload from "~/components/ImageUpload"
 import DatePicker from "~/components/DatePicker"
@@ -47,14 +45,14 @@ const CampaignSchema = campaignSchema
 
 export const CampaignAddNew = () => {
   // const { handleSubmit, control, setValue, formState: { errors }, reset, watch } = useForm<CampaignFormData>()
-  const { handleSubmit, control, setValue, formState: { errors }, reset, watch, trigger } = useForm<CampaignFormData>({
+  const { handleSubmit, control, setValue, formState: { errors }, trigger } = useForm<CampaignFormData>({
     resolver: yupResolver(CampaignSchema),
     defaultValues: {
       title: "",
       category: "",
       sort_description: "",
       story: "",
-      image_url: undefined,
+      images: undefined,
       goal: undefined,
       raised_amount: undefined,
       amount_prefilled: undefined,
@@ -76,9 +74,9 @@ export const CampaignAddNew = () => {
     trigger(name)
   }
 
-  const handleResetValue = () => {
-    reset()
-  }
+  // const handleResetValue = () => {
+  //   reset()
+  // }
 
 
 
@@ -135,24 +133,24 @@ export const CampaignAddNew = () => {
   }, [filterCountry])
 
   const handleResetImage = () => {
-    setValue("image_url", undefined as any)
-    trigger("image_url")
+    setValue("images", undefined as any)
+    trigger("images")
   }
 
 
 
   return <div className="bg-white dark:bg-darkSecondary rounded-xl p-5  lg:py-10 lg:px-[66px]">
 
-    <Heading className="py-4 px-14  rounded-xl text-center  font-bold text-[25px]">Start a Campaign 🚀</Heading>
+    <Heading className="py-4 px-14 text-base  rounded-xl text-center max-w-max mx-auto bg-text4/20 dark:bg-darkStroke  font-bold md:text-[25px]">Start a Campaign 🚀</Heading>
 
     <form className="mt-10" onSubmit={handleAddNewCampaign}>
-      <FormRow>
+      <FormRow xs={1} md={2}>
         <FormGroup>
-          <Label>Campaign Title *</Label>
+          <Label>Campaign Title </Label>
           <Input errorField={errors.title?.message} name="title" type="text" control={control} placeholder="Write a titel" />
         </FormGroup>
         <FormGroup>
-          <Label>Select a category *</Label>
+          <Label>Select a category </Label>
           <Controller
             name="category"
             control={control}
@@ -175,7 +173,7 @@ export const CampaignAddNew = () => {
         </FormGroup>
       </FormRow>
       <FormGroup>
-        <Label htmlFor="sort_description">Short Description *</Label>
+        <Label htmlFor="sort_description">Short Description </Label>
         <Textarea errorField={errors.sort_description?.message} placeholder="Write a short description...." control={control} name="sort_description" id="sort_description" />
       </FormGroup>
       <FormGroup>
@@ -190,7 +188,7 @@ export const CampaignAddNew = () => {
               }}
               errorField={errors.story?.message}
               apiKey="ohboiokpooat3dlyvzijliktbpqouisca394g8tr0l13nvph"
-              onInit={(evt, editor) => editorRef.current = editor}
+              onInit={(_, editor) => editorRef.current = editor}
               init={{
                 height: 500,
                 menubar: false,
@@ -208,9 +206,13 @@ export const CampaignAddNew = () => {
                 image_title: true,
                 automatic_uploads: true,
                 file_picker_callback: (cb, value, meta) => {
+                  console.log({
+                    value,
+                    meta
+                  });
                   const input = document.createElement('input');
                   input.setAttribute('type', 'file');
-                  input.setAttribute('accept', 'image/*');
+                  input.setAttribute('accept', 'image/');
                   input.onchange = function () {
                     const file = input.files![0];
                     const reader = new FileReader();
@@ -227,35 +229,39 @@ export const CampaignAddNew = () => {
                   };
                   input.click();
                 },
-                images_upload_handler: handleImageUpload as any
+                images_upload_handler: handleImageUpload as any,
               }}
               onEditorChange={(content, editor) => {
                 onChange(content)
+                console.log(editor);
               }}
+
               value={value}
             />
           )}
         />
       </FormGroup>
-      <FormRow>
+      <FormRow xs={1}>
         <FormGroup>
-          <Label>Image Upload</Label>
+          <Label htmlFor="images">Upload Images</Label>
           <Controller
-            name="image_url"
+            name="images"
             control={control}
             render={({ field: { onChange, name, value, ...rest } }) => (
-              <ImageUpload errorField={errors.image_url?.message} value={value as any} reset={handleResetImage} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const file = e.target.files?.[0]
-                if (file) {
-                  onChange(file)
-                  trigger(name)
-                }
+              <ImageUpload multiple={true} errorField={errors.images?.message} value={value as any} reset={handleResetImage} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                const file = e.target.files
+                console.log(file);
+                // if (file) {
+                //   onChange(file)
+                //   console.log("file", file);
+                //   trigger(name)
+                // }
               }} {...rest} />
             )}
           />
         </FormGroup>
       </FormRow>
-      <FormRow>
+      <FormRow xs={1}>
         <FormGroup>
           <Label>Goal</Label>
           <InputNumber errorField={errors.goal?.message} name="goal" control={control} placeholder="$0.00 USD" />
@@ -265,7 +271,7 @@ export const CampaignAddNew = () => {
           <InputNumber errorField={errors.raised_amount?.message} name="raised_amount" type="number" control={control} placeholder="$0.00 USD" />
         </FormGroup>
       </FormRow>
-      <FormRow>
+      <FormRow xs={1} md={2}>
         <FormGroup>
           <Label>Amount Prefilled</Label>
           <InputNumber name="amount_prefilled" errorField={errors.amount_prefilled?.message} type="number" control={control} placeholder="Amount Prefilled" />
@@ -278,7 +284,7 @@ export const CampaignAddNew = () => {
           <p className="text-sm text-left text-text3">Place Youtube or Vimeo Video URL</p>
         </FormGroup>
       </FormRow>
-      <FormRow>
+      <FormRow xs={1} md={2}>
         <FormGroup>
           <Label>Campaign End Method</Label>
           <Controller
@@ -330,7 +336,7 @@ export const CampaignAddNew = () => {
         </FormGroup>
       </FormRow>
 
-      <FormRow>
+      <FormRow xs={1} md={2}>
         <FormGroup>
           <Label>Start Date</Label>
           <Controller

@@ -1,4 +1,3 @@
-import React from "react";
 import { useDropdown } from "./Dropdown.context";
 import { IOption } from "./Dropdown";
 

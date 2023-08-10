@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { IAllProps, Editor as TinyMCEditor } from '@tinymce/tinymce-react'
 import classNames from "classnames"
 
@@ -8,7 +7,7 @@ interface IEditorProps extends IAllProps {
   errorField?: string
 }
 const Editor = ({ classNameWrapper, errorField, hideError = false, ...props }: IEditorProps) => {
-  const [localValue, setValue] = useState("")
+
   return (
     <div className={classNames("relative", classNameWrapper)}>
       <TinyMCEditor

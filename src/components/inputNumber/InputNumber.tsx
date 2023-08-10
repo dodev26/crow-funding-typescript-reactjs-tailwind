@@ -1,9 +1,7 @@
-import { HTMLInputTypeAttribute, InputHTMLAttributes, useState } from 'react'
+import { InputHTMLAttributes } from 'react'
 import { useController } from 'react-hook-form'
 import type { FieldPath, FieldValues } from 'react-hook-form'
 import classnames from "classnames"
-import { EyeViewToggle } from '../icons/EyeViewToggle/EyeViewToggle'
-import useToggle from '~/hooks/useToggle'
 import classNames from 'classnames'
 
 

@@ -1,9 +1,8 @@
 
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Button from '~/components/button'
 import Logo from '~/components/logo'
 import { PATH } from '~/constants'
-import { auth } from '~/firebase/initialize'
 import { useAppSelector } from '~/hooks/hooks'
 import DashboardSearch from '~/modules/dashboard/DashboardSearch'
 import DashboartFund from '~/modules/dashboard/DashboartFund'
@@ -25,7 +24,9 @@ const DashboartTopbar = () => {
       <div className="flex items-center flex-1 gap-x-10 justify-end">
         <DashboartFund className='hidden' />
         <Button href={PATH.campaign_start} type='button' kind='secondary'>Start a campaign</Button>
-        <img loading='lazy' src={user?.photoURL as string} alt="avatar" className="avatar flex-shrink-0 w-10 h-10 lg:w-[52px] lg:h-[52px] object-cover rounded-full" />
+        <NavLink className="inline-block" to={PATH.profile}>
+          <img loading='lazy' src={user?.photoURL as string} alt="avatar" className="avatar flex-shrink-0 w-10 h-10 lg:w-[52px] lg:h-[52px] object-cover rounded-full " />
+        </NavLink>
       </div>
     </div>
   )

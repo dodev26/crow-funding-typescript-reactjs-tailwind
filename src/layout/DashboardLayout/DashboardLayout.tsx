@@ -1,18 +1,10 @@
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import ReactModal from "react-modal"
 import { Outlet } from "react-router-dom"
-import Input from "~/components/Input/Input"
-import Button from "~/components/button"
-import { Heading } from "~/components/heading/Heading"
-import { useModal } from "~/contexts/modal.context"
-import { CampaignPerk } from "~/modules/campaign"
 import DashboardSidebar from "~/modules/dashboard/DashboardSidebar"
 import DashboartTopbar from "~/modules/dashboard/DashboartTopbar"
 
 export const DashboardLayout = () => {
-  const { control } = useForm()
-  const { openModal } = useModal()
+  // const { control } = useForm()
+  // const { openModal } = useModal()
 
   return <div className="p-6 lg:p-10 bg-inherit min-h-screen">
     {/* <ReactModal isOpen overlayClassName="modal-overlay fixed inset-0 bg-black/40 z-50 flex items-center justify-center" className="modal-content w-full max-w-[521px] bg-white dark:bg-darkSecondary rounded-2xl outline-none p-10 relative max-h-[90vh] overflow-y-scroll scroll-hidden">

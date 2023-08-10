@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion";
+import { motionBlur } from "~/utils/motion";
 
 
 export const DashboardSearch = () => {
@@ -42,7 +44,10 @@ export const DashboardSearch = () => {
       {showSearch && (
         <>
           <div className="fixed inset-0 bg-text1/60"></div>
-          <div ref={resultRef} className="search-results pb-6 pt-3 pl-6 pr-3 w-full lg:w-[843px] bg-white absolute top-full  left-0 z-10 translate-y-5  overflow-hidden rounded-3xl">
+
+          <motion.div
+            {...motionBlur}
+            ref={resultRef} className="search-results pb-6 pt-3 pl-6 pr-3 w-full lg:w-[843px] bg-white absolute top-full  left-0 z-10 translate-y-5  overflow-hidden rounded-3xl">
             <div className="flex items-center justify-between  bg-graySoft">
               <span className="text-text1 text-sm font-medium underline">See all 10,124 fundraisier</span>
               <button onClick={() => setShowSearch(false)} className="w-[72px] flex items-center justify-center h-[50px] rounded-xl bg-error/20 text-error">
@@ -64,10 +69,12 @@ export const DashboardSearch = () => {
                 <p className="text-sm text-text2"><strong>education</strong> fun</p>
               </div>
             </div>
-          </div>
+          </motion.div>
+
         </>
-      )}
-    </div>
+      )
+      }
+    </div >
   )
 }
 

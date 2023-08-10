@@ -30,7 +30,7 @@ export const campaignSchema = yup.object().shape({
     yup.ref('start_date'),
     "end date can't be before start date"
   ).required("End date is required"),
-  image_url: yup.mixed().required('Image is required'),
+  images: yup.mixed().required('Image is required'),
 })
 export type SchemaType = yup.InferType<typeof schema>
 export type CampaignShemaType = yup.InferType<typeof campaignSchema>
