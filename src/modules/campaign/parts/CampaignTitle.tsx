@@ -1,8 +1,39 @@
-import classNames from "classnames"
+import classNames from 'classnames'
+import { Link } from 'react-router-dom'
+import Skeleton from '~/components/skeleton'
+import { cn } from '~/utils/scripts'
 
-export const CampaignTitle = ({ children, className = "mb-1 font-semibold" }: {
-  children: React.ReactNode,
+interface ICampaignTitle extends React.HTMLAttributes<HTMLHeadingElement> {
+  children: React.ReactNode
   className?: string
-}) => {
-  return <h3 className={classNames("text-text1 dark:text-white", className)}>{children}</h3>
+  href?: string
+  isLoading?: boolean
+  classNameSkeleton?: string
+}
+export const CampaignTitle = ({
+  isLoading = false,
+  children,
+  classNameSkeleton,
+  href,
+  className = 'mb-1 font-semibold',
+  ...props
+}: ICampaignTitle) => {
+  const styles = cn('text-text1 dark:text-white transition-all', className, {
+    'cursor-pointer  hover:text-primary dark:hover:text-primary': !!href
+  })
+  if (isLoading) {
+    return <Skeleton className={cn(styles, classNameSkeleton)} />
+  }
+  if (href) {
+    return (
+      <Link to={href} className={styles}>
+        {children}
+      </Link>
+    )
+  }
+  return (
+    <h3 className={styles} {...props}>
+      {children}
+    </h3>
+  )
 }

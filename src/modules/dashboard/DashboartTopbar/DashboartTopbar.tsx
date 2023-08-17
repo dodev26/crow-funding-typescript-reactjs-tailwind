@@ -1,5 +1,5 @@
-
 import { NavLink } from 'react-router-dom'
+import Avatar from '~/components/avatar'
 import Button from '~/components/button'
 import Logo from '~/components/logo'
 import { PATH } from '~/constants'
@@ -8,30 +8,34 @@ import DashboardSearch from '~/modules/dashboard/DashboardSearch'
 import DashboartFund from '~/modules/dashboard/DashboartFund'
 import { RootState } from '~/store/configureStore'
 
-
-
 const DashboartTopbar = () => {
-  const { user } = useAppSelector((state: RootState) => state.auth)
+  const { user, loading } = useAppSelector((state: RootState) => state.auth)
 
+  console.log('auth loading', loading)
   return (
     <div className='flex items-center'>
-      <div className="flex items-center lg:flex-1 gap-x-10">
+      <div className='flex items-center lg:flex-1 gap-x-10'>
         <Logo />
-        <div className="w-full max-w-[458px] hidden lg:block">
+        <div className='w-full max-w-[458px] hidden lg:block'>
           <DashboardSearch />
         </div>
       </div>
-      <div className="flex items-center flex-1 gap-x-10 justify-end">
+      <div className='flex items-center flex-1 gap-x-10 justify-end'>
         <DashboartFund className='hidden' />
-        <Button href={PATH.campaign_start} type='button' kind='secondary'>Start a campaign</Button>
-        <NavLink className="inline-block" to={PATH.profile}>
-          <img loading='lazy' src={user?.photoURL as string} alt="avatar" className="avatar flex-shrink-0 w-10 h-10 lg:w-[52px] lg:h-[52px] object-cover rounded-full " />
+        <Button href={PATH.campaign_start} type='button' kind='secondary'>
+          Start a campaign
+        </Button>
+        <NavLink className='inline-block' to={PATH.profile}>
+          <Avatar
+            src={user?.photoURL as string}
+            isLoading={loading}
+            alt='avatar'
+            className='avatar flex-shrink-0 w-10 h-10 lg:w-[52px] lg:h-[52px] object-cover rounded-full '
+          />
         </NavLink>
       </div>
     </div>
   )
 }
 
-export {
-  DashboartTopbar
-}
+export { DashboartTopbar }

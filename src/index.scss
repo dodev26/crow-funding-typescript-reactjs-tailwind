@@ -16,7 +16,7 @@
   }
   input {
     @apply outline-none;
-    &[type="number"] {
+    &[type='number'] {
       &.show-arrow {
         &::-webkit-outer-spin-button,
         &::-webkit-inner-spin-button {
@@ -87,5 +87,52 @@ body .react-date-picker__calendar .react-calendar {
   }
   .react-calendar__tile--now {
     @apply bg-primary text-white;
+  }
+}
+
+body {
+  &.dark {
+    .tox.tox-tinymce {
+      @apply border-2 border-darkStroke;
+      & > .tox-editor-container {
+        & > .tox-editor-header {
+          @apply bg-darkSecondary;
+          & > .tox-toolbar-overlord .tox-toolbar__primary {
+            @apply bg-darkSecondary;
+          }
+        }
+        .tox-sidebar-wrap .tox-edit-area > iframe {
+          @apply bg-darkSecondary text-white;
+        }
+        .tox-statusbar {
+          @apply bg-darkSecondary border-t border-darkStroke;
+        }
+      }
+    }
+  }
+}
+
+body {
+  .campaign-carousel {
+    &::-webkit-scrollbar {
+      @apply w-2 h-[3px];
+    }
+    &::-webkit-scrollbar-track {
+      @apply bg-slate-100 rounded-xl dark:bg-darkStroke;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply bg-slate-200;
+    }
+  }
+  &.dark {
+    .campaign-carousel {
+      &::-webkit-scrollbar-track {
+        @apply bg-darkSecondary;
+      }
+      &::-webkit-scrollbar-thumb {
+        @apply bg-darkStroke;
+      }
+    }
   }
 }

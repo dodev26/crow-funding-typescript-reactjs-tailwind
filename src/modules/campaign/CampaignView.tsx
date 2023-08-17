@@ -1,88 +1,227 @@
-import Button from "~/components/button"
-import { CampaignGrid, CampaignPerk, CampaignSupport, CampaignViewAuthor, CampaingnItem } from "."
-import { CampaignCategory, CampaignDesc, CampaignImage, CampaignMeta, CampaignTitle } from "./parts"
+import Button from '~/components/button'
+import { CampaignGrid, CampaignPerk, CampaignSupport, CampaignViewAuthor, CampaingnItem } from '.'
+import {
+  CampaignCarousel,
+  CampaignCategory,
+  CampaignDesc,
+  CampaignImage,
+  CampaignMeta,
+  CampaignProgress,
+  CampaignTitle
+} from './parts'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { CampaignShemaType } from '~/utils/schema'
+import { DocumentSnapshot, doc, getDoc } from 'firebase/firestore'
 
+import { toast } from 'react-toastify'
+import { Campaign } from '~/types/campaign'
+import { Heading } from '~/components/heading/Heading'
+import { db } from '~/firebase/initialize'
+import { useParams } from 'react-router-dom'
 
-const MIDDLE_BAR = [{
-  title: 'Campaign',
-
-}, {
-  title: "Risks"
-},
-{
-  title: "FAQ"
-}, {
-  title: "Updates"
-}, {
-  title: "Comments"
-}
+const MIDDLE_BAR = [
+  {
+    title: 'Campaign'
+  },
+  {
+    title: 'Risks'
+  },
+  {
+    title: 'FAQ'
+  },
+  {
+    title: 'Updates'
+  },
+  {
+    title: 'Comments'
+  }
 ]
+type CampaignType = Campaign
 export const CampaignView = () => {
+  const [campaign, setCampaign] = useState<CampaignType>({
+    amount_prefilled: 0,
+    campaign_end_method: '',
+    category: '',
+    country: '',
+    createdAt: new Date(),
+    end_date: new Date(),
+    goal: 0,
+    images: [],
+    raised_amount: 0,
+    slug: '',
+    sort_description: '',
+    start_date: new Date(),
+    story: '',
+    title: '',
+    updatedAt: new Date(),
+    video_url: '',
+    author: '',
+    avatar: '',
+    idAuthor: ''
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [currentImg, setCurrentImg] = useState<string>('')
+  const { slug: SlugCampaign } = useParams()
+  const idCampaign = SlugCampaign?.split('-')[SlugCampaign?.split('-').length - 1]
+
+  const {
+    amount_prefilled,
+    campaign_end_method,
+    category,
+    country,
+    author,
+    avatar,
+    idAuthor,
+    createdAt,
+    end_date,
+    goal,
+    images,
+    raised_amount,
+    slug,
+    sort_description,
+    start_date,
+    story,
+    title,
+    updatedAt,
+    video_url
+  } = campaign
+
+  const firstImage = Array.from(images as string[])[0]
+  const ImagesOther = Array.from(images as string[]).slice(1)
+
+  useEffect(() => {
+    if (firstImage) {
+      setCurrentImg(firstImage)
+    }
+  }, [firstImage])
+
+  const handleViewImg = (url: string) => {
+    setCurrentImg(url)
+  }
+
+  const getCampain = async (id: string) => {
+    setIsLoading(true)
+    try {
+      const campaignsRef = doc(db, 'campaigns', `${id}`)
+      const data = await getDoc(campaignsRef)
+      if (data.exists()) {
+        setCampaign(data.data() as CampaignType)
+      }
+    } catch (error) {
+      toast.error("fetch campaign's data failed")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getCampain(idCampaign as string)
+  }, [idCampaign])
+
   return (
     <>
-      <div className="h-[140px] rounded-3xl bg-cover bg-no-repeat bg-center gradient-banner flex items-center justify-center text-white text-[40px] font-bold" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1688809957913-0ecfb2d32dc5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80)` }}>
+      <div
+        className='md:h-[140px] h-[119px] rounded-3xl bg-cover bg-no-repeat bg-center gradient-banner flex items-center justify-center text-white text-xl  md:text-[40px] font-bold'
+        style={{
+          backgroundImage: `url(https://images.unsplash.com/photo-1688809957913-0ecfb2d32dc5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80)`
+        }}
+      >
         Education
       </div>
-      <div className="flex items-start gap-x-10 w-full max-w-[1066px] mt-10">
-        <div className="flex-1">
-          <CampaignImage imageUrl="https://plus.unsplash.com/premium_photo-1675756583672-04a27dfe1f64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" imageAlt="img" className="h-[398px] mb-[30px]" />
-          <div className="flex justify-center gap-x-5">
-            {Array(4).fill(0).map((_, index) => (
-              <img src="https://plus.unsplash.com/premium_photo-1675756583672-04a27dfe1f64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="" className='
-              w-[89px] h-[70px] object-cover rounded-lg cursor-zoom-in' key={index} />
-            ))}
-          </div>
+      <div className='flex flex-col md:flex-row  items-start gap-x-10 w-full max-w-[1066px] mt-10'>
+        <div className='flex-1 w-full'>
+          <CampaignImage
+            isLoading={isLoading}
+            imageUrl={currentImg}
+            imageAlt='img'
+            className='h-[210px] w-full md:h-[398px] mb-[30px] overflow-hidden rounded-2xl'
+          />
+          <CampaignCarousel onClick={handleViewImg} isLoading={isLoading} images={ImagesOther} />
         </div>
-        <div className="flex-1 max-w-[443px]">
-          <CampaignCategory nameCategory="Architecture" pathCategory="/" className="mb-4 text-sm" />
-          <CampaignTitle className="font-bold mb-4 text-xl" >Remake - We Make architecture exhibition</CampaignTitle>
-          <CampaignDesc className="mb-6 text-sm">Remake - We Make: an exhibition about architecture's social
-            agency in the face of urbanisation</CampaignDesc>
-          <CampaignViewAuthor />
-          <div className="w-full rounded-full bg-[#EFEFEF] h-1 mb-6">
-            <div className={`h-full rounded-full w-0  bg-primary/80 transition-all`} style={{
-              width: `${50}%`
-            }}></div>
+        <div className='flex-1 md:max-w-[443px] max-w-full mt-4 md:mt-0'>
+          <CampaignCategory
+            isLoading={isLoading}
+            classNameSkeleton='w-2/4 h-[20px]'
+            nameCategory={category}
+            pathCategory='/'
+            className='mb-4 text-sm'
+          />
+          <CampaignTitle
+            title={title}
+            classNameSkeleton='h-[28px] w-full'
+            isLoading={isLoading}
+            className='font-bold mb-4 text-xl line-clamp-2'
+          >
+            {title}
+          </CampaignTitle>
+          <CampaignDesc
+            isLoading={isLoading}
+            classNameSkeleton='flex flex-col gap-y-1'
+            className='mb-6 text-sm line-clamp-2 leading-5'
+          >
+            {sort_description}{' '}
+          </CampaignDesc>
+          <CampaignViewAuthor
+            isLoading={isLoading}
+            author={author}
+            amountCampaigns='1'
+            avatar={avatar}
+            country={country}
+          />
+          <CampaignProgress isLoading={isLoading} className='h-1' classNameSkeleton='h-full' />
+          <div className='flex items-start gap-x-5 justify-between'>
+            <CampaignMeta isLoading={isLoading} amount='$2,000' text='Raised of $2,500' size='big' />
+            <CampaignMeta isLoading={isLoading} amount='173' text='Total backers' size='big' />
+            <CampaignMeta isLoading={isLoading} amount='30' text='Days left' size='big' />
           </div>
-          <div className="flex items-start gap-x-5 justify-between">
-            <CampaignMeta amount="$2,000" text="Raised of $2,500" size="big" />
-            <CampaignMeta amount="173" text="Total backers" size="big" />
-            <CampaignMeta amount="30" text="Days left" size="big" />
-          </div>
-          <Button kind="primary" type="button" className="w-full mt-4">Back this project</Button>
+          <Button disabled={isLoading} kind='primary' type='button' className='w-full mt-4'>
+            Back this project
+          </Button>
         </div>
       </div>
-      <div className="flex items-center justify-between mt-[100px] bg-white p-5 border-b border-b-slate-200">
-        <div className='flex items-center gap-x-[60px] text-sm font-medium text-text3'>
-          {MIDDLE_BAR.map((item) => (<span className='cursor-pointer first:text-secondary'>{item.title}</span>))}
+      <div className='flex items-center justify-center w-full mt-[30px] md:mt-[60px] dark:bg-darkSecondary bg-white p-5 border-b border-b-slate-200 dark:border-none'>
+        <div className='flex items-center justify-between md:justify-stretch  flex-1 md:gap-x-[40px] lg:gap-x-[60px] text-xs md:text-sm font-medium text-text3'>
+          {MIDDLE_BAR.map((item, index) => (
+            <span key={index} className='cursor-pointer first:text-secondary'>
+              {item.title}
+            </span>
+          ))}
         </div>
-        <Button kind='primary'>Back this project</Button>
+        <Button className='hidden md:inline-block' kind='primary'>
+          Back this project
+        </Button>
       </div>
-      <div className='grid gap-x-[124px] grid-cols-[1.3fr,1fr] mt-[35px] max-w-[1170px] mx-auto'>
+      <div className='grid md:gap-x-[40px] xl:gap-x-[124px] md:grid-cols-[1.3fr,1fr] mt-[35px] max-w-[1170px] mx-auto'>
         <div>
-          <h2 className="text-lg font-semibold uppercase mb-5">STORY</h2>
-          <div className="bg-white w-full">
-
-          </div>
+          <h2 className='text-lg dark:text-white font-semibold uppercase mb-5'>STORY</h2>
+          <div
+            className='bg-white lg:px-4 dark:bg-darkSecondary dark:text-text3  w-full'
+            dangerouslySetInnerHTML={{ __html: story }}
+          ></div>
         </div>
-        <div>
+        <div className='mt-10 md:mt-0'>
           <CampaignSupport />
-          <div className="mb-[60px]" />
-          <div className="flex flex-col gap-y-[30px]">
-            {Array(3).fill(0).map((_, index) => (
-              <CampaignPerk key={index} />
-            ))}
+          <div className='mb-[60px]' />
+          <div className='flex flex-col gap-y-[30px]'>
+            {Array(3)
+              .fill(0)
+              .map((_, index) => (
+                <CampaignPerk key={index} />
+              ))}
           </div>
         </div>
       </div>
-      <h2 className="mb-10 text-xl font-semibold">You also may be interested in</h2>
-      <CampaignGrid>
-        <CampaingnItem />
-        <CampaingnItem />
-        <CampaingnItem />
-        <CampaingnItem />
-      </CampaignGrid>
+      <div className='mt-20'>
+        <Heading as='h2' className='mb-10 text-xl dark: font-semibold dark:text-white'>
+          You also may be interested in
+        </Heading>
+        <CampaignGrid>
+          <CampaingnItem />
+          <CampaingnItem />
+          <CampaingnItem />
+          <CampaingnItem />
+        </CampaignGrid>
+      </div>
     </>
   )
 }
-

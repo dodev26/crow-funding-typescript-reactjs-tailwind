@@ -63,5 +63,6 @@
     "subheading": "Để Bắt đầu Xử lý các khoản thanh toán và quyên góp bằng thẻ tín dụng, bạn sẽ cần chọn Paypal hoặc Payoneer",
     "paypalDesc": "Thanh toán trực tiếp qua Paypal.",
     "payoneerDesc": "Thanh toán trực tiếp qua Payoneer."
-  }
+  },
+  "startCampaign": {}
 }
