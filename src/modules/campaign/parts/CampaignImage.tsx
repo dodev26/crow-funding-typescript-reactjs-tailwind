@@ -1,5 +1,4 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { useEffect } from 'react'
 import { SkeletonForMedia } from '~/components/skeleton/Skeleton'
 import { cn } from '~/utils/scripts'
 
@@ -19,7 +18,7 @@ export const CampaignImage = ({
   classNameSkeleton = ''
 }: ICampaignImageProps) => {
   const styles = cn(className)
-  const [parent, enableAnimations] = useAutoAnimate(/* optional config */)
+  const [parent] = useAutoAnimate(/* optional config */)
 
   if (isLoading) {
     return <SkeletonForMedia className={cn(styles, classNameSkeleton)} />

@@ -11,7 +11,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import { FormEventHandler, useEffect, useRef, useState } from 'react'
 import useOnChange from '~/hooks/useOnchange'
 import axios from 'axios'
-import { CampaignShemaType, campaignSchema } from '~/utils/schema'
+import { campaignSchema } from '~/utils/schema'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { toast } from 'react-toastify'
 import ImageUpload from '~/components/ImageUpload'
@@ -20,9 +20,8 @@ import DatePicker from '~/components/DatePicker'
 import InputNumber from '~/components/inputNumber'
 import { Heading } from '~/components/heading/Heading'
 import Editor from '~/components/Editor'
-import { useColRefUser } from '~/hooks'
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
-import { auth, db } from '~/firebase/initialize'
+import { addDoc, collection } from 'firebase/firestore'
+import { db } from '~/firebase/initialize'
 import { uploadTaskPromise } from '~/utils/scripts'
 import { Campaign } from '~/types/campaign'
 import { useAppSelector } from '~/hooks/hooks'
@@ -146,7 +145,7 @@ export const CampaignAddNew = () => {
       const colRef = collection(db, 'campaigns')
       let payload = {
         ...data,
-        slug: slugify(data.title, { lower: true }),
+        slug: slugify(data.title, { lower: true, locale: 'vi' }),
         images: [],
         createdAt: new Date(),
         updatedAt: new Date(),

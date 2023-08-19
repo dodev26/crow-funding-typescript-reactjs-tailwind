@@ -20,7 +20,7 @@ export const CampaignCarousel: React.FC<ICampaignCarousel> = ({
   onMouseLeave
 }) => {
   const wrapperStyles = cn(
-    'campaign-carousel transition-all w-full relative h-[90px] max-w-full lg:max-w-[416px] mx-auto lg:overflow-x-hidden lg:hover:overflow-x-scroll overflow-x-scroll ',
+    'campaign-carousel transition-all w-full relative h-[90px] max-w-full lg:max-w-[416px] mx-auto lg:overflow-x-hidden lg:hover:overflow-x-scroll overflow-x-scroll',
     className
   )
   const containerStyles = cn('flex  w-full h-full absolute justify-start gap-x-4  md:gap-x-5 pb-4 flex-nowrap')
@@ -48,6 +48,8 @@ export const CampaignCarousel: React.FC<ICampaignCarousel> = ({
           <div
             data-url={url}
             key={url}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
             onClick={() => handleViewImg(url)}
             className={`bg-white dark:bg-darkSoft ${imagesStyles}`}
           >

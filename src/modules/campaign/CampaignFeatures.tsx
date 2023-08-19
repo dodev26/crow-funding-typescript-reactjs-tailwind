@@ -17,7 +17,7 @@ export const CampaignFeatures: React.FC<ICampaignFeatures> = ({
   title = '',
   href = '/'
 }) => {
-  const [progress, setProgress] = useState(0)
+  const [_, setProgress] = useState(0)
 
   useEffect(() => {
     setTimeout(() => {

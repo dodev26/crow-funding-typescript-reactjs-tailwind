@@ -16,10 +16,10 @@ const PreviewImage = ({ onDelete, onPreview, url, className }: IPreviewImage) =>
       )}
     >
       <div className='absolute inset-0 w-full  h-full text-white bg-gray-300/50 dark:bg-gray-700/70 rounded-xl group-hover:flex hidden items-center justify-center gap-x-6'>
-        <button type='button' className='cursor-pointer'>
+        <button onClick={onPreview} type='button' className='cursor-pointer'>
           <IconView className='h-8 w-8' />
         </button>
-        <button type='button' className='cursor-pointer'>
+        <button onClick={onDelete} type='button' className='cursor-pointer'>
           <IconClose className='h-8 w-8' />
         </button>
       </div>

@@ -1,19 +1,18 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBGo5ZkRGyXd3SZT_qzDn2ErE1yErwdOGo",
-  authDomain: "crow-funding2023.firebaseapp.com",
-  projectId: "crow-funding2023",
-  storageBucket: "crow-funding2023.appspot.com",
-  messagingSenderId: "702204691520",
-  appId: "1:702204691520:web:b7f1fd43ab35ffa7834ba5",
-  measurementId: "G-N8P13BE0JJ"
-};
+  apiKey: 'AIzaSyAHHbKhqyitZfrNzIdRIi8tIfgDgneBdo0',
+  authDomain: 'crowfundingappv2.firebaseapp.com',
+  projectId: 'crowfundingappv2',
+  storageBucket: 'crowfundingappv2.appspot.com',
+  messagingSenderId: '672270851984',
+  appId: '1:672270851984:web:71c8078d4fdc70e48a9d15',
+  measurementId: 'G-JZNMC6G28K'
+}
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-
+const app = initializeApp(firebaseConfig)
+export const db = getFirestore(app)
+export const auth = getAuth(app)

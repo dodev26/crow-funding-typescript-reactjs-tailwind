@@ -14,7 +14,7 @@ interface IImageUpload extends React.InputHTMLAttributes<HTMLInputElement> {
 const ImageUpload = ({ errorField, hideError, reset, multiple = false, ...props }: IImageUpload) => {
   const [image, setImage] = useState<string[]>([])
   const [parent] = useAutoAnimate()
-  const [localValue, setLocalValue] = useState<FileList | null>(null)
+  const [_, setLocalValue] = useState<FileList | null>(null)
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files

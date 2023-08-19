@@ -9,9 +9,8 @@ import {
   CampaignProgress,
   CampaignTitle
 } from './parts'
-import { useEffect, useLayoutEffect, useState } from 'react'
-import { CampaignShemaType } from '~/utils/schema'
-import { DocumentSnapshot, doc, getDoc } from 'firebase/firestore'
+import { useEffect, useState } from 'react'
+import { doc, getDoc } from 'firebase/firestore'
 
 import { toast } from 'react-toastify'
 import { Campaign } from '~/types/campaign'
@@ -64,27 +63,7 @@ export const CampaignView = () => {
   const { slug: SlugCampaign } = useParams()
   const idCampaign = SlugCampaign?.split('-')[SlugCampaign?.split('-').length - 1]
 
-  const {
-    amount_prefilled,
-    campaign_end_method,
-    category,
-    country,
-    author,
-    avatar,
-    idAuthor,
-    createdAt,
-    end_date,
-    goal,
-    images,
-    raised_amount,
-    slug,
-    sort_description,
-    start_date,
-    story,
-    title,
-    updatedAt,
-    video_url
-  } = campaign
+  const { category, country, author, avatar, images, sort_description, story, title } = campaign
 
   const firstImage = Array.from(images as string[])[0]
   const ImagesOther = Array.from(images as string[]).slice(1)
