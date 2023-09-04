@@ -1,0 +1,89 @@
+{
+  "signIn": {
+    "signIn": "Sign in",
+    "heading": "Sign in",
+    "submit": "Sign in",
+    "dontHaveAccount": "Don't have an account?",
+    "signInWithGG": "Sign in with Google",
+    "password": "Password",
+    "email": "Email",
+    "pEmail": "Example@email.com",
+    "pPassword": "Enter Password",
+    "forgotPassword": "Forgot Password?"
+  },
+  "signUp": {
+    "signUp": "Sign up",
+    "heading": "Sign up",
+    "haveAccount": "Already have an account?",
+    "signUpWithGG": "Sign up with Google",
+    "or": "Or sign up with email",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "dateOfBirth": "Date of Birth",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "submit": "create my account",
+    "pFirstName": "Enter First Name",
+    "pLastName": "Enter Last Name",
+    "pEmail": "Enter Email",
+    "pPhone": "Enter Phone",
+    "pPassword": "Enter Password",
+    "pConfirmPassword": "Confirm Password",
+    "question": "I agree to the <0>Tearms Of Use</0> and have read and understand the <1>Privacy Policy</1>.",
+    "tearmsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "settings": {
+    "heading": "Settings",
+    "subheading": "System settings",
+    "language": {
+      "heading": "Language",
+      "subheading": "Select your preferred language"
+    },
+    "theme": {
+      "heading": "Theme",
+      "subheading": "Select your preferred theme"
+    }
+  },
+  "dashboard": {
+    "yourCampaign": "Your Campaign",
+    "notCampaign": "You have no campaign yet",
+    "popularCampaign": "Popular Campaign"
+  },
+  "campaign": {
+    "heading": "Create Your Campaign",
+    "subheading": "Jump right into our editor and create your first Virtue campaign !",
+    "help": "Need any help? Learn More...",
+    "create": "Create campaign",
+    "yourCampaign": "Your Campaign"
+  },
+  "payment": {
+    "heading": "Connect Your Payment Processor",
+    "subheading": "To Start Processing credit card payments and donations, you will need to select either Paypal or Payoneer",
+    "paypalDesc": "Get paid directly via Paypal.",
+    "payoneerDesc": "Get paid directly via Payoneer."
+  },
+  "notfound": {
+    "heading": "404",
+    "subheading": "The page you are looking for might have been removed had its name changed or is temporarily unavailable.",
+    "back": "Back to home"
+  },
+  "thanksModal": {
+    "heading": "Thank’s for backing campaign!",
+    "subheading": "Thank you so much for your support. We are so grateful to have the best backers on the planet.",
+    "shareThisCampaign": "Share this campaign"
+  },
+  "resetPassword": {
+    "heading": "Reset password with email",
+    "label": "Your email",
+    "placeholder": "Enter your email",
+    "submit": "Send"
+  },
+  "sendSuccessModal": {
+    "heading": "Please Check Your Email",
+    "subheading": "We have sent you an email with a link to reset your password. Please check your email and click on the link to reset your password.",
+    "back": "Back"
+  }
+}

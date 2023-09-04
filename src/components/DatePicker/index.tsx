@@ -1,30 +1,64 @@
-import { useState } from 'react';
-import { DatePicker as DatePickerCustomize, DatePickerProps } from 'react-date-picker';
-import { Value } from 'react-date-picker/dist/cjs/shared/types';
-import 'react-date-picker/dist/DatePicker.css';
-import 'react-calendar/dist/Calendar.css';
+import { useState } from 'react'
+import { DatePicker as DatePickerCustomize, DatePickerProps } from 'react-date-picker'
+
+import 'react-date-picker/dist/DatePicker.css'
+import 'react-calendar/dist/Calendar.css'
+import { Value } from 'node_modules/react-date-picker/dist/esm/shared/types'
+import { cn } from '~/utils/scripts'
 
 interface IDatePicker extends DatePickerProps {
-  errorField?: string,
-  hideError?: boolean,
+  errorField?: string
+  hideError?: boolean
   onChange?: (value: Value) => void
   value?: Value
+  classNameWrapper?: string
+  className?: string
 }
-const DatePicker = ({ errorField, hideError, onChange, value, ...props }: IDatePicker) => {
+const DatePicker = ({ errorField, hideError, onChange, value, className, classNameWrapper, ...props }: IDatePicker) => {
   const [localValue, setLocalValue] = useState(new Date())
-
+  console.log(localValue)
   const handleChangeValueDatePicker = (value: Value) => {
     setLocalValue(value as Date)
     onChange?.(value)
   }
 
-  return <div>
-    <DatePickerCustomize value={value} onChange={handleChangeValueDatePicker} {...props} calendarIcon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
-    </svg>
-    } />
-    {!hideError && <div className='mt-1 text-red-600 min-h-[1.25rem] text-xs font-semibold max-w-full break-words'>{errorField}</div>}
-  </div>
+  return (
+    <div className='customs-datepicker'>
+      <DatePickerCustomize
+        value={value}
+        onChange={handleChangeValueDatePicker}
+        className={cn(
+          'tailwind-datepicker',
+          {
+            '!border !border-red-600 !text-red-600': Boolean(errorField)
+          },
+          className
+        )}
+        {...props}
+        calendarIcon={
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth={1.5}
+            stroke='currentColor'
+            className='w-6 h-6'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z'
+            />
+          </svg>
+        }
+      />
+      {!hideError && (
+        <div className='mt-1 text-red-600 min-h-[1.25rem] text-xs font-semibold max-w-full break-words'>
+          {errorField}
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default DatePicker

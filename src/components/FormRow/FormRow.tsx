@@ -1,10 +1,10 @@
-import classNames from "classnames";
+import { cn } from '~/utils/scripts'
 
 interface IFormRowProps {
-  children: React.ReactNode;
+  children: React.ReactNode
   className?: string
 }
 
-export const FormRow = ({ children, className = 'gap-x-[45px]' }: IFormRowProps) => {
-  return <div className={classNames("grid grid-cols-2", className)}>{children}</div>
+export const FormRow = ({ children, className }: IFormRowProps) => {
+  return <div className={cn('grid gap-x-[45px] grid-cols-2', className)}>{children}</div>
 }

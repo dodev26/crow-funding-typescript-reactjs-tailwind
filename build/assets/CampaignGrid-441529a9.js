@@ -1,0 +1,1 @@
+import{j as i,p as o}from"./index-895e883f.js";const g=({children:s,type:r="default",styleType:a,className:d})=>{switch(r){case"secondary":a="grid grid-cols-1 gap-y-10";break;default:a="grid md:grid-cols-4 gap-x-7";break}return r!=="default"?i.jsx("div",{className:o(a,d),children:s}):i.jsx("div",{className:o(a,d),children:s})};export{g as C};

@@ -1,0 +1,1 @@
+import{j as i}from"./index-895e883f.js";import{P as a}from"./PageTitle-be8333d4.js";import{C as t}from"./CampaignAddNew-c8b7c203.js";import"./CampaignPerk-6a848d2b.js";import"./Label-29ac64f5.js";import"./index-93a93a38.js";import"./v4-a960c1f4.js";const m=()=>i.jsxs(i.Fragment,{children:[i.jsx(a,{children:"Edit Campaign"}),i.jsx(t,{})]}),d=m;export{d as CampaignEditPage};

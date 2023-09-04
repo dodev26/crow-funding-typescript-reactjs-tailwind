@@ -1,0 +1,89 @@
+{
+  "signIn": {
+    "signIn": "Đăng nhập",
+    "heading": "Đăng nhập",
+    "submit": "Đăng nhập",
+    "dontHaveAccount": "Chưa có tài khoản?",
+    "signInWithGG": "Đăng nhập với Google",
+    "password": "Mật khẩu",
+    "email": "Email",
+    "pEmail": "Example@email.com",
+    "pPassword": "Nhập mật khẩu",
+    "forgotPassword": "Quên mật khẩu?"
+  },
+  "signUp": {
+    "signUp": "Đăng ký",
+    "heading": "Đăng ký",
+    "haveAccount": "Đã có tài khoản?",
+    "signUpWithGG": "Đăng ký với Google",
+    "or": "Hoặc đăng ký với email",
+    "firstName": "Họ",
+    "lastName": "Tên",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "dateOfBirth": "Ngày sinh",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "submit": "Tạo tài khoản",
+    "pFirstName": "Nhập họ",
+    "pLastName": "Nhập tên",
+    "pEmail": "Nhập email",
+    "pPhone": "Nhập số điện thoại",
+    "pPassword": "Nhập mật khẩu",
+    "pConfirmPassword": "Xác nhận mật khẩu",
+    "question": "Tôi đồng ý với <0>điều khoản</0> và đã đọc và hiểu <1>chính sách</1>",
+    "tearmsOfUse": "Điều khoản sử dụng",
+    "privacyPolicy": "Chính sách bảo mật"
+  },
+  "settings": {
+    "heading": "Cài đặt",
+    "subheading": "Cài đặt chung cho trang web của bạn",
+    "language": {
+      "heading": "Ngôn ngữ",
+      "subheading": "Chọn ngôn ngữ cho trang web của bạn"
+    },
+    "theme": {
+      "heading": "Giao diện",
+      "subheading": "Chọn giao diện cho trang web của bạn"
+    }
+  },
+  "dashboard": {
+    "yourCampaign": "Chiến dịch của bạn",
+    "popularCampaign": "Chiến dịch phổ biến",
+    "notCampaign": "Không có chiến dịch nào"
+  },
+  "campaign": {
+    "heading": "Tạo chiến dịch của bạn",
+    "subheading": "Vào trình chỉnh sửa của chúng tôi và tạo chiến dịch Virtue đầu tiên của bạn!",
+    "help": "Có cần giúp gì không? Tìm hiểu thêm...",
+    "create": "Tạo chiến dịch",
+    "yourCampaign": "Chiến dịch của bạn"
+  },
+  "payment": {
+    "heading": "Kết nối cổng thanh toán của bạn",
+    "subheading": "Để Bắt đầu Xử lý các khoản thanh toán và quyên góp bằng thẻ tín dụng, bạn sẽ cần chọn Paypal hoặc Payoneer",
+    "paypalDesc": "Thanh toán trực tiếp qua Paypal.",
+    "payoneerDesc": "Thanh toán trực tiếp qua Payoneer."
+  },
+  "notfound": {
+    "heading": "404",
+    "subheading": "Trang bạn đang tìm kiếm không tồn tại.",
+    "back": "Trở về trang chủ"
+  },
+  "thanksModal": {
+    "heading": "Cảm ơn vì đã ủng hộ chiến dịch!",
+    "subheading": "Cảm ơn bạn rất nhiều vì đã hỗ trợ của bạn. Chúng tôi rất biết ơn vì có những người ủng hộ tốt nhất trên hành tinh",
+    "shareThisCampaign": "Chia sẻ chiến dịch này"
+  },
+  "resetPassword": {
+    "heading": "Đặt lại mật khẩu",
+    "label": "Email của bạn",
+    "placeholder": "Nhập email",
+    "submit": "Gửi đi"
+  },
+  "sendSuccessModal": {
+    "heading": "Vui lòng kiểm tra Email của bạn!",
+    "subheading": "Chúng tôi đã gửi cho bạn một email với hướng dẫn để đặt lại mật khẩu của bạn.",
+    "back": "Quay lại"
+  }
+}
