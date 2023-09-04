@@ -1,12 +1,11 @@
-import { translations } from "~/locales/translation";
-import { _t } from "~/utils/lang";
-
+import { translations } from '~/locales/translation'
+import { _t } from '~/utils/lang'
 
 export const lang = {
   heading: () => _t(translations.signUp.heading),
   signIn: () => _t(translations.signIn.signIn),
   haveAccount: () => _t(translations.signUp.haveAccount),
-  signInWithGG: () => _t(translations.signUp.signUpWithGG),
+  signInWithGG: () => _t(translations.signIn.signInWithGG),
   or: () => _t(translations.signUp.or),
   firstName: () => _t(translations.signUp.firstName),
   pFirstName: () => _t(translations.signUp.pFirstName),
@@ -24,6 +23,5 @@ export const lang = {
   submit: () => _t(translations.signUp.submit),
   question: () => _t(translations.signUp.question),
   tearmsOfUse: () => _t(translations.signUp.tearmsOfUse),
-  privacyPolicy: () => _t(translations.signUp.privacyPolicy),
-
+  privacyPolicy: () => _t(translations.signUp.privacyPolicy)
 }

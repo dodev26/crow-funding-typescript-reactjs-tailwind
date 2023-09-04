@@ -12,6 +12,8 @@ import { RootState } from '~/store/configureStore'
 import { Campaign } from '~/types/campaign'
 import { toast } from 'react-toastify'
 import { PATH } from '~/constants'
+import NotFound from '~/components/NotFound'
+import PageTitle from '~/components/pageTitle'
 
 export const DashboardPage = () => {
   const { t } = useTranslation()
@@ -51,17 +53,22 @@ export const DashboardPage = () => {
 
   return (
     <>
+      <PageTitle>Dashboard</PageTitle>
       <Heading isLoading={isLoading} as='h2' number={amountCampaigns}>
         {t(lang.yourCampaign())}
       </Heading>
-      <CampaignFeatures
-        isLoading={isLoading}
-        href={`${PATH.campaign}/${newLastestCampaigns.slug}-${newLastestCampaigns.id}`}
-        category={newLastestCampaigns.category}
-        title={newLastestCampaigns.title}
-        sortDesc={newLastestCampaigns.sort_description}
-        image={Array.from(newLastestCampaigns.images as string[])[0]}
-      />
+      {!isLoading && yourCampaigns.length === 0 ? (
+        <NotFound message={t(lang.notCampaign())} />
+      ) : (
+        <CampaignFeatures
+          isLoading={isLoading}
+          href={`${PATH.campaign}/${newLastestCampaigns.slug}-${newLastestCampaigns.id}`}
+          category={newLastestCampaigns.category}
+          title={newLastestCampaigns.title}
+          sortDesc={newLastestCampaigns.sort_description}
+          image={Array.from(newLastestCampaigns.images as string[])[0]}
+        />
+      )}
       <Gap />
       <Heading isLoading={isLoading} as='h2'>
         {t(lang.popularCampaign())}

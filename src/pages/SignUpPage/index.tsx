@@ -3,7 +3,6 @@ import { Controller, useForm } from 'react-hook-form'
 import Label from '~/components/Label'
 import Input from '~/components/Input/Input'
 import Button from '~/components/button'
-import Checkbox from '~/components/checkbox'
 import { SchemaType, schema } from '~/utils/schema'
 import { yupResolver } from '@hookform/resolvers/yup'
 import ButtonGoogle from '~/components/buttonGoogle'
@@ -11,17 +10,19 @@ import { FormGroup } from '~/components/FormGroup/FormGroup'
 import { omit } from 'lodash'
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth'
 import { auth, db } from '~/firebase/initialize'
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { FirebaseError } from '@firebase/util'
 import { toast } from 'react-toastify'
 import FormRow from '~/components/FormRow'
 import DatePicker from '~/components/DatePicker'
 import InputNumber from '~/components/inputNumber'
 import { useState } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { Heading } from '~/components/heading/Heading'
 import { lang } from './lang'
 import { PATH } from '~/constants'
+import CheckTermPolicy from '~/components/checkTermPolicy'
+import { useGoogleAuth } from '~/hooks'
 
 type FormFields = Required<
   Pick<
@@ -62,22 +63,32 @@ export const SignUpPage = () => {
     defaultValues,
     resolver: yupResolver(signUpSchema)
   })
-
+  const { signInWithGoogle } = useGoogleAuth()
   const onSubmit = handleSubmit(async (data) => {
     const validData = omit(data, ['confirmPassword', 'term'])
     setIsLoading(true)
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, validData.email, validData.password)
+      const colRef = collection(db, 'users')
       await updateProfile(userCredential.user, {
         displayName: `${validData.firstName} ${validData.lastName}`,
         photoURL: 'https://i.pravatar.cc/300'
       })
-      await setDoc(doc(db, 'users', String(new Date().getTime())), {
-        ...validData,
-        avatarURL: 'https://i.pravatar.cc/300',
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
-      })
+      await addDoc(
+        colRef,
+        omit(
+          {
+            ...validData,
+            avatarURL: 'https://i.pravatar.cc/300',
+            uid: userCredential.user.uid,
+            name: userCredential.user.displayName,
+            authProvider: 'email',
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          },
+          ['password', 'confirmPassword']
+        )
+      )
       await sendEmailVerification(userCredential.user)
       toast.success('Sign up successfully')
     } catch (error) {
@@ -104,6 +115,7 @@ export const SignUpPage = () => {
       </p>
 
       <ButtonGoogle
+        onClick={signInWithGoogle}
         text={t(lang.signInWithGG())}
         className='"hover:border-primary transition-all flex items-center justify-center w-full py-4 mb-5 gap-x-3 border border-strock dark:border-darkStroke rounded-xl '
       />
@@ -206,27 +218,7 @@ export const SignUpPage = () => {
             placeholder={t(lang.pConfirmPassword())}
           />
         </FormGroup>
-        <div className='flex items-start gap-x-5 mb-5'>
-          <Checkbox errorField={errors.term?.message} control={control} name='term' id='term' />
-          {/* <p className="text-sm text-text4 max-w-[325px]">
-            I agree to the <strong className="underline text-secondary font-thin">Tearms of Use</strong> and have read and
-            understand the <strong className="underline text-secondary font-thin">Privacy policy</strong>.
-          </p> */}
-          <div className='text-sm text-text4 max-w-[325px]'>
-            <Trans
-              i18nKey={t(lang.question())}
-              t={t}
-              values={{
-                tearmsOfUse: t(lang.tearmsOfUse()),
-                privacyPolicy: t(lang.privacyPolicy())
-              }}
-              components={[
-                <Link to='/' className='underline text-secondary font-thin' />,
-                <Link to='/' className='underline text-secondary font-thin' />
-              ]}
-            ></Trans>
-          </div>
-        </div>
+        <CheckTermPolicy control={control} name='term' errorField={errors.term?.message} />
         <Button isLoading={isLoading} disabled={isLoading} type='submit' kind='primary' className='w-full normal-case'>
           {t(lang.submit())}
         </Button>

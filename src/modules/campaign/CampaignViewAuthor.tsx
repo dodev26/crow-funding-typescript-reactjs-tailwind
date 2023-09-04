@@ -61,7 +61,12 @@ export const CampaignViewAuthor: React.FC<ICampaignViewAuthor> = ({
           <strong className='text-primary'>
             {isLoading ? <Skeleton className='w-20 h-3 mb-1' /> : `${amountCampaigns} Campaign`}
           </strong>
-          <span className='block w-[6px] h-[6px] rounded-full bg-text3'></span>
+          {isLoading ? (
+            <Skeleton className='w-[6px] h-[6px] rounded-full' />
+          ) : (
+            <span className='block w-[6px] h-[6px] rounded-full bg-text3' />
+          )}
+
           <span>{isLoading ? <Skeleton className='w-16 h-3' /> : country}</span>
         </div>
       </div>

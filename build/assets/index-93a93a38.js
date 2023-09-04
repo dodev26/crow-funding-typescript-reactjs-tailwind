@@ -1,0 +1,1 @@
+import{r as o}from"./index-895e883f.js";import{c as a}from"./CampaignPerk-6a848d2b.js";function m(s){const[t,n]=o.useState();return[o.useCallback(e=>{e instanceof HTMLElement?n(a(e,s)):n(void 0)},[]),e=>{t&&(e?t.enable():t.disable())}]}export{m as u};

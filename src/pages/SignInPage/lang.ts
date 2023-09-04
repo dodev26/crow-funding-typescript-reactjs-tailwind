@@ -1,6 +1,5 @@
-import { translations } from "~/locales/translation";
-import { _t } from "~/utils/lang";
-
+import { translations } from '~/locales/translation'
+import { _t } from '~/utils/lang'
 
 export const lang = {
   heading: () => _t(translations.signIn.heading),
@@ -13,5 +12,5 @@ export const lang = {
   pEmail: () => _t(translations.signIn.pEmail),
   pPassword: () => _t(translations.signIn.pPassword),
   forgotPassword: () => _t(translations.signIn.forgotPassword),
-  submit: () => _t(translations.signIn.submit),
+  submit: () => _t(translations.signIn.submit)
 }

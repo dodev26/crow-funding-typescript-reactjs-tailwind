@@ -33,6 +33,7 @@ const authSlice = createSlice({
       state.loading = false
       state.isAuth = true
       state.user = action.payload
+      state.error = null
       setUserToLS(action.payload)
     },
     loginFailure: (state, action: PayloadAction<string>) => {

@@ -7,5 +7,5 @@ export interface Campaign extends CampaignShemaType {
   idAuthor: string
   avatar: string
   slug: string
-  id?: string
+  readonly id?: string
 }

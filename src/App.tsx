@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import AuthLayout from '~/layout/AuthLayout'
 import DashboardLayout from '~/layout/DashboardLayout'
 import { PATH } from '~/constants'
@@ -18,6 +18,13 @@ import { RootState } from './store/configureStore'
 import { ProfilePage } from './pages/ProfilePage'
 import { PaymentPage } from './pages/PaymentPage'
 import { SettingsPage } from './pages/SettingsPage'
+import { NotFoundPage } from './pages/NotFoundPage'
+import { WithDrawPage } from './pages/WithDrawPage/Loadable'
+import CheckoutLayout from './layout/CheckoutLayout'
+import { CheckoutPage } from './pages/CheckoutPage'
+import { CampaignEditPage } from './pages/CampaignEditPage/Loadable'
+import ScrollToTop from './modules/app'
+import { ResetPassword } from './pages/ResetPassword/Loadable'
 
 // const customStyles = {
 //   content: {
@@ -50,6 +57,7 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
+        console.log(userAuth)
         dispatch(loginSuccess(userAuth))
       } else {
         dispatch(logout())
@@ -59,7 +67,8 @@ const App = () => {
   }, [])
 
   return (
-    <BrowserRouter>
+    <>
+      <ScrollToTop />
       <Routes>
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
@@ -67,20 +76,26 @@ const App = () => {
             <Route path={PATH.campaign} element={<CampaignPage />} />
             <Route path={PATH.campaign_detail} element={<CampaignDetailPage />} />
             <Route path={PATH.campaign_start} element={<StartCampaignPage />} />
+            <Route path={PATH.campaign_edit} element={<CampaignEditPage />} />
             <Route path={PATH.profile} element={<ProfilePage />} />
             <Route path={PATH.payment} element={<PaymentPage />} />
+            <Route path={PATH.withdraw} element={<WithDrawPage />} />
             <Route path={PATH.settings} element={<SettingsPage />} />
+          </Route>
+          <Route element={<CheckoutLayout />}>
+            <Route index path={PATH.checkout} element={<CheckoutPage />} />
           </Route>
         </Route>
         <Route element={<RejectedRoute />}>
           <Route element={<AuthLayout />}>
+            <Route path={PATH.reset_password} element={<ResetPassword />} />
             <Route path={PATH.sign_up} element={<SignUpPage />} />
             <Route path={PATH.sign_in} element={<SignInPage />} />
           </Route>
         </Route>
-        <Route path='*' element={<div>404</div>} />
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter>
+    </>
   )
 }
 

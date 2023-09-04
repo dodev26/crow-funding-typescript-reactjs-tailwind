@@ -1,0 +1,1 @@
+import{j as r,b as x}from"./index-895e883f.js";const o=({children:t,className:e,...s})=>r.jsx("label",{className:x("text-sm font-medium text-text2 dark:text-text3 cursor-pointer",e),...s,children:t});export{o as L};

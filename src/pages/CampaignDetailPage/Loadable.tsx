@@ -1,11 +1,9 @@
-import { lazyLoad } from '~/utils/Loadable';
+import { lazyLoad } from '~/utils/Loadable'
 
 export const CampaignDetailPage = lazyLoad(
   () => import('./index'),
-  module => module.CampaignDetailPage,
+  (module) => module.CampaignDetailPage,
   {
-    fallback: (
-      <div>loading...</div>
-    ),
-  },
-);
+    fallback: <div>loading...</div>
+  }
+)

@@ -8,7 +8,7 @@
     -webkit-font-smoothing: antialiased;
     max-width: 1440px;
     &.dark {
-      @apply bg-darkbg;
+      @apply transition-[background] ease-linear bg-darkbg duration-75;
     }
   }
   button {
@@ -91,6 +91,11 @@ body .react-date-picker__calendar .react-calendar {
 }
 
 body {
+  .customs-tinymce.isError {
+    & > .tox.tox-tinymce {
+      @apply border border-red-600;
+    }
+  }
   &.dark {
     .tox.tox-tinymce {
       @apply border-2 border-darkStroke;

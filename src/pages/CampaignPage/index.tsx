@@ -5,11 +5,13 @@ import { Heading } from '~/components/heading/Heading'
 import { PATH } from '~/constants'
 import { CampaignGrid } from '~/modules/campaign'
 import { lang } from './lang'
+import PageTitle from '~/components/pageTitle'
 
 export const CampaignPage = () => {
   const { t } = useTranslation()
   return (
     <>
+      <PageTitle>Campaigns</PageTitle>
       <div className='mb-10 bg-white dark:bg-darkSecondary rounded-3xl flex items-center justify-between py-8 px-10'>
         <div className='flex items-start gap-x-6'>
           <div className='w-12 h-12 rounded-full flex items-center justify-center text-white bg-secondary/60'>

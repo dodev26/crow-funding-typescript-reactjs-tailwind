@@ -49,6 +49,7 @@
   },
   "dashboard": {
     "yourCampaign": "Your Campaign",
+    "notCampaign": "You have no campaign yet",
     "popularCampaign": "Popular Campaign"
   },
   "campaign": {
@@ -63,5 +64,26 @@
     "subheading": "To Start Processing credit card payments and donations, you will need to select either Paypal or Payoneer",
     "paypalDesc": "Get paid directly via Paypal.",
     "payoneerDesc": "Get paid directly via Payoneer."
+  },
+  "notfound": {
+    "heading": "404",
+    "subheading": "The page you are looking for might have been removed had its name changed or is temporarily unavailable.",
+    "back": "Back to home"
+  },
+  "thanksModal": {
+    "heading": "Thank’s for backing campaign!",
+    "subheading": "Thank you so much for your support. We are so grateful to have the best backers on the planet.",
+    "shareThisCampaign": "Share this campaign"
+  },
+  "resetPassword": {
+    "heading": "Reset password with email",
+    "label": "Your email",
+    "placeholder": "Enter your email",
+    "submit": "Send"
+  },
+  "sendSuccessModal": {
+    "heading": "Please Check Your Email",
+    "subheading": "We have sent you an email with a link to reset your password. Please check your email and click on the link to reset your password.",
+    "back": "Back"
   }
 }

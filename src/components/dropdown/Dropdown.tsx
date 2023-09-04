@@ -1,14 +1,14 @@
-import DropdownProvider from "./Dropdown.context";
-import { List } from "./List";
-import Option from "./Option";
-import Search from "./Search";
-import { Select } from "./Select";
+import DropdownProvider from './Dropdown.context'
+import { List } from './List'
+import Option from './Option'
+import Search from './Search'
+import { Select } from './Select'
 
 export interface ISelect {
-  placeholder: string;
-  selected: string;
-  className?: string;
-  type?: "primary" | "secondary"
+  placeholder: string
+  selected: string
+  className?: string
+  type?: 'primary' | 'secondary'
 }
 export interface IList {
   children: React.ReactNode
@@ -32,16 +32,21 @@ interface IDropdownComposition {
 interface IDropdown {
   errorField?: string | undefined
   hideError?: boolean
-  children: React.ReactNode,
+  children: React.ReactNode
 }
-export const Dropdown: React.FC<IDropdown> & IDropdownComposition = ({ errorField, hideError = false, children }) => {
-
-  return <DropdownProvider>
-    <div className="relative inline-block h-full w-full">
-      {children}
-      {!hideError && <div className='mt-1 text-red-600 min-h-[1.25rem] text-xs font-semibold'>{errorField}</div>}
-    </div>
-  </DropdownProvider>
+export const Dropdown: React.FC<IDropdown> & IDropdownComposition = ({
+  errorField = '',
+  hideError = false,
+  children
+}) => {
+  return (
+    <DropdownProvider errorStatus={Boolean(errorField)}>
+      <div className='relative inline-block h-full w-full'>
+        {children}
+        {!hideError && <div className='mt-1 text-red-600 min-h-[1.25rem] text-xs font-semibold'>{errorField}</div>}
+      </div>
+    </DropdownProvider>
+  )
 }
 
 Dropdown.List = List

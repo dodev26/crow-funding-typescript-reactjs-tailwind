@@ -49,7 +49,8 @@
   },
   "dashboard": {
     "yourCampaign": "Chiến dịch của bạn",
-    "popularCampaign": "Chiến dịch phổ biến"
+    "popularCampaign": "Chiến dịch phổ biến",
+    "notCampaign": "Không có chiến dịch nào"
   },
   "campaign": {
     "heading": "Tạo chiến dịch của bạn",
@@ -64,5 +65,25 @@
     "paypalDesc": "Thanh toán trực tiếp qua Paypal.",
     "payoneerDesc": "Thanh toán trực tiếp qua Payoneer."
   },
-  "startCampaign": {}
+  "notfound": {
+    "heading": "404",
+    "subheading": "Trang bạn đang tìm kiếm không tồn tại.",
+    "back": "Trở về trang chủ"
+  },
+  "thanksModal": {
+    "heading": "Cảm ơn vì đã ủng hộ chiến dịch!",
+    "subheading": "Cảm ơn bạn rất nhiều vì đã hỗ trợ của bạn. Chúng tôi rất biết ơn vì có những người ủng hộ tốt nhất trên hành tinh",
+    "shareThisCampaign": "Chia sẻ chiến dịch này"
+  },
+  "resetPassword": {
+    "heading": "Đặt lại mật khẩu",
+    "label": "Email của bạn",
+    "placeholder": "Nhập email",
+    "submit": "Gửi đi"
+  },
+  "sendSuccessModal": {
+    "heading": "Vui lòng kiểm tra Email của bạn!",
+    "subheading": "Chúng tôi đã gửi cho bạn một email với hướng dẫn để đặt lại mật khẩu của bạn.",
+    "back": "Quay lại"
+  }
 }

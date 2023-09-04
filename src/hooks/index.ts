@@ -1,3 +1,3 @@
 import useColRefUser from './useColRefUser'
-
-export { useColRefUser }
+import useGoogleAuth from './useGoogleAuth'
+export { useColRefUser, useGoogleAuth }

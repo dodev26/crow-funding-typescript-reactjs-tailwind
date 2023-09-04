@@ -1,26 +1,29 @@
-import { yupResolver } from "@hookform/resolvers/yup"
-import { FirebaseError } from "firebase/app"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { FormGroup } from "~/components/FormGroup/FormGroup"
-import Input from "~/components/Input/Input"
-import Button from "~/components/button"
-import { schema } from "~/utils/schema"
+import { yupResolver } from '@hookform/resolvers/yup'
+import { FirebaseError } from 'firebase/app'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { FormGroup } from '~/components/FormGroup/FormGroup'
+import Input from '~/components/Input/Input'
+import Button from '~/components/button'
+import { schema } from '~/utils/schema'
 
 interface IFormConfirmPassword {
-  onSubmit: () => (currentPassword: {
-    currentPassword: string
-  }) => Promise<void>
+  onSubmit: () => (currentPassword: { currentPassword: string }) => Promise<void>
 }
 
-const ConfirmPassSchema = schema.pick(["currentPassword"])
+const ConfirmPassSchema = schema.pick(['currentPassword'])
 export const FormConfirmPassword = ({ onSubmit }: IFormConfirmPassword) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const { control, handleSubmit, formState: { errors }, setError } = useForm<{
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setError
+  } = useForm<{
     currentPassword: string
   }>({
     defaultValues: {
-      currentPassword: ""
+      currentPassword: ''
     },
     resolver: yupResolver(ConfirmPassSchema)
   })
@@ -37,16 +40,29 @@ export const FormConfirmPassword = ({ onSubmit }: IFormConfirmPassword) => {
     } finally {
       setLoading(false)
     }
-  }
-  )
+  })
 
-  return <form onSubmit={onSubmitData}>
-    <FormGroup>
-      <label htmlFor="email" className="text-text3 text-sm">Current Password</label>
-      <Input errorField={errors.currentPassword?.message} disabled={false} type="password" control={control} name="currentPassword" id="currentPassword" placeholder="Your current password" />
-    </FormGroup>
-    <FormGroup>
-      <Button isLoading={loading} disabled={loading} type="submit" className="w-full" kind="primary">Confirm</Button>
-    </FormGroup>
-  </form>
+  return (
+    <form onSubmit={onSubmitData}>
+      <FormGroup>
+        <label htmlFor='email' className='text-text3 text-sm'>
+          Current Password
+        </label>
+        <Input
+          errorField={errors.currentPassword?.message}
+          disabled={false}
+          type='password'
+          control={control}
+          name='currentPassword'
+          id='currentPassword'
+          placeholder='Your current password'
+        />
+      </FormGroup>
+      <FormGroup>
+        <Button isLoading={loading} disabled={loading} type='submit' className='w-full' kind='primary'>
+          Confirm
+        </Button>
+      </FormGroup>
+    </form>
+  )
 }

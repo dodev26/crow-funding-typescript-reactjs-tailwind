@@ -3,12 +3,14 @@ import { FormGroup } from '~/components/FormGroup/FormGroup'
 import FormRow from '~/components/FormRow'
 import Input from '~/components/Input/Input'
 import Label from '~/components/Label'
+import { DevTool } from '@hookform/devtools'
 import Button from '~/components/button'
 import slugify from 'slugify'
 import Dropdown from '~/components/dropdown'
 import Textarea from '~/components/textarea'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
-import { FormEventHandler, useEffect, useRef, useState } from 'react'
+import { FormEventHandler, useEffect, useMemo, useRef, useState } from 'react'
+import { v4 } from 'uuid'
 import useOnChange from '~/hooks/useOnchange'
 import axios from 'axios'
 import { campaignSchema } from '~/utils/schema'
@@ -20,12 +22,13 @@ import DatePicker from '~/components/DatePicker'
 import InputNumber from '~/components/inputNumber'
 import { Heading } from '~/components/heading/Heading'
 import Editor from '~/components/Editor'
-import { addDoc, collection } from 'firebase/firestore'
+import { Timestamp, addDoc, collection, doc, getDoc } from 'firebase/firestore'
 import { db } from '~/firebase/initialize'
 import { uploadTaskPromise } from '~/utils/scripts'
 import { Campaign } from '~/types/campaign'
 import { useAppSelector } from '~/hooks/hooks'
 import { RootState } from '~/store/configureStore'
+import { useParams } from 'react-router-dom'
 
 interface BlobInfo {
   id: () => string
@@ -81,14 +84,12 @@ type FormInput = Pick<
   | 'amount_prefilled'
 >
 export const CampaignAddNew = () => {
-  // const { handleSubmit, control, setValue, formState: { errors }, reset, watch } = useForm<CampaignFormData>()
   const {
     handleSubmit,
     control,
-    watch,
     setValue,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
     trigger
   } = useForm<FormInput>({
     resolver: yupResolver(CampaignSchema),
@@ -114,17 +115,14 @@ export const CampaignAddNew = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [filterCountry, onChangeFilterCountry] = useOnChange(500)
   const editorRef = useRef<any>()
+  const { idCampaign } = useParams()
+  const isEditMode = useMemo(() => Boolean(idCampaign), [idCampaign])
 
   const handleSelectValue = (name: keyof FormInput, value: any) => {
     setValue(name, value)
     trigger(name)
   }
 
-  // const handleResetValue = () => {
-  //   reset()
-  // }
-
-  console.log(watch('images'))
   const handleImageUpload = async (blobInfo: BlobInfo, _: ProgressFn) => {
     try {
       const storage = getStorage()
@@ -139,6 +137,7 @@ export const CampaignAddNew = () => {
   }
 
   const handleAddNewCampaign = handleSubmit(async (data) => {
+    if (!isValid) return
     setIsSubmitting(true)
     try {
       const arrImages = Array.from(data.images as FileList)
@@ -153,7 +152,9 @@ export const CampaignAddNew = () => {
         author: user?.displayName,
         idAuthor: user?.uid
       } as Campaign
-      const arrLinks = await Promise.all(arrImages.map((file) => uploadTaskPromise(file, 'images/' + file.name)))
+      const arrLinks = await Promise.all(
+        arrImages.map((file) => uploadTaskPromise(file, 'images/' + `${v4()}-` + file.name))
+      )
       if (arrLinks.length > 0) {
         payload = {
           ...payload,
@@ -162,8 +163,10 @@ export const CampaignAddNew = () => {
       } else {
         throw new Error('Upload failed')
       }
+
       await addDoc(colRef, payload)
       toast.success('Upload successfully')
+
       reset({})
     } catch (error) {
       toast.error('Upload failed')
@@ -171,6 +174,12 @@ export const CampaignAddNew = () => {
       setIsSubmitting(false)
     }
   })
+
+  // const handleUpdateCampaign = async (data: FormInput) => {
+  //   try {
+  //     const docRef = doc(db, 'campaigns', idCampaign)
+  //   } catch (error) {}
+  // }
 
   async function fetchCountries(): Promise<void> {
     setIsLoading(true)
@@ -195,6 +204,24 @@ export const CampaignAddNew = () => {
     trigger('images')
   }
 
+  const fetchCampaign = async () => {
+    if (!isEditMode || !idCampaign) return
+    const docRef = doc(db, 'campaigns', idCampaign)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+      const data = {
+        ...docSnap.data(),
+        start_date: new Date((docSnap.data()?.start_date as Timestamp).seconds * 1000),
+        end_date: new Date((docSnap.data()?.end_date as Timestamp).seconds * 1000)
+      }
+      reset(data)
+    }
+  }
+
+  useEffect(() => {
+    fetchCampaign()
+  }, [idCampaign])
+
   return (
     <div className='bg-white dark:bg-darkSecondary rounded-xl p-5  lg:py-10 lg:px-[66px]'>
       <Heading className='py-4 px-14 text-base  rounded-xl text-center max-w-max mx-auto bg-text4/20 dark:bg-darkStroke  font-bold md:text-[25px]'>
@@ -202,6 +229,7 @@ export const CampaignAddNew = () => {
       </Heading>
 
       <form className='mt-10' onSubmit={handleAddNewCampaign}>
+        <DevTool control={control} /> {/* set up the dev tool */}
         <FormRow className='grid-cols-1 md:grid-cols-2'>
           <FormGroup>
             <Label>Campaign Title </Label>
@@ -250,7 +278,7 @@ export const CampaignAddNew = () => {
           <Controller
             name='story'
             control={control}
-            render={({ field: { value, onChange } }) => (
+            render={({ field: { value, onChange, name } }) => (
               <Editor
                 disabled={isSubmitting}
                 onLoadContent={(editor) => {
@@ -308,7 +336,6 @@ export const CampaignAddNew = () => {
                         const base64 = (reader.result as string).split(',')[1]
                         const blobInfo = blobCache.create(id, file, base64)
                         blobCache.add(blobInfo)
-                        // Call the callback and populate the Title field with the file name
                         cb(blobInfo.blobUri(), { title: file.name })
                       }
                       reader.readAsDataURL(file)
@@ -318,8 +345,9 @@ export const CampaignAddNew = () => {
                   images_upload_handler: handleImageUpload as any
                 }}
                 onEditorChange={(content, editor) => {
-                  onChange(content)
                   console.log(editor)
+                  onChange(content)
+                  trigger(name)
                 }}
                 value={value}
               />
@@ -339,9 +367,12 @@ export const CampaignAddNew = () => {
                   errorField={errors.images?.message}
                   value={value as any}
                   reset={handleResetImage}
-                  onChange={(e) => {
-                    const files = e.target.files
-                    onChange(files)
+                  onChange={(files) => {
+                    if (files.length > 0) {
+                      onChange(files)
+                    } else {
+                      onChange(undefined)
+                    }
                     trigger(name)
                   }}
                   name={name}
@@ -488,7 +519,13 @@ export const CampaignAddNew = () => {
           </FormGroup>
         </FormRow>
         <div className='mt-10'>
-          <Button disabled={isSubmitting} isLoading={isSubmitting} type='submit' kind='primary' className='mx-auto'>
+          <Button
+            disabled={isSubmitting}
+            isLoading={isSubmitting}
+            type='submit'
+            kind='primary'
+            className='mx-auto w-full max-w-[255px]'
+          >
             Submit new campaign
           </Button>
         </div>
